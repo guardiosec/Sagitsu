@@ -1,4 +1,4 @@
-This version includes small adjustments to fit better into our sprint planning meeting
+This version includes small adjustments to fit better into our sprint planning process
 
 
 Hatjitsu
