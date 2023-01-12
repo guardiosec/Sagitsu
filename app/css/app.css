@@ -1029,7 +1029,7 @@ a:focus {
     filter: hue-rotate(0);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(720deg);
     filter: hue-rotate(720deg);
   }
 }
