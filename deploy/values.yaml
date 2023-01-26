@@ -50,3 +50,7 @@ internalTLS:
   certName: sagitsu-internal-cert
   domains:
     - "sagitsu.guardio.dev"
+
+domains:
+  - domain: sagitsu.guardio.dev
+    name: sagitsu
