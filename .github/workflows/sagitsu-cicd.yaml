@@ -27,36 +27,3 @@ jobs:
           run: |
             gcloud docker -- push $image_name:${{github.run_number}}
             gcloud docker -- push $image_name:latest
-
-  deploy:
-    name: deploy the sagitsu
-    needs: [build]
-    runs-on: ubuntu-latest
-    env:
-      image_name: ${{ secrets.REPO_NAME }}
-      cluster_name: ${{ secrets.CLUSTER_NAME }}
-      gcp_project: ${{ secrets.GCP_PROJECT }}
-      gcp_zone: ${{ secrets.GCP_ZONE }}
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  
-
-      - name: Run Prerequisites to k8s connection
-        run: |
-          set -e
-          echo '${{ secrets.GCP_SERVICE_ACCOUNT }}' > client-secret.json
-          gcloud auth activate-service-account --key-file=client-secret.json
-          gcloud auth configure-docker --quiet
-          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-          sudo apt-get update && sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
-          gcloud container clusters get-credentials $cluster_name --zone $gcp_zone --project $gcp_project
-          gcloud config set project $gcp_project
-
-      - name: Run Helm Install / Upgrade of the service
-        run: |
-            helm upgrade --install sagitsu -f deploy/values.yaml ./deploy --set image.tag=latest
