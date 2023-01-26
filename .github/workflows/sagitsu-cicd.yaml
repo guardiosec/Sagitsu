@@ -5,6 +5,7 @@ on:
 
 jobs:
   build:  
+    name: Build and push the Image
     runs-on: ubuntu-latest
     env:
       image_name: ${{ secrets.REPO_NAME }}
