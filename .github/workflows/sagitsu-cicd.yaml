@@ -1,11 +1,9 @@
 name: Sagitsu CICD
-
 on:
   workflow_dispatch:
-
 jobs:
-  build:  
-    name: Build and push the Image
+  build:
+    name: Build and push the image
     runs-on: ubuntu-latest
     env:
       image_name: ${{ secrets.REPO_NAME }}
