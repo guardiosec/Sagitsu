@@ -1,0 +1,29 @@
+name: Sagitsu CICD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    env:
+      image_name: ${{ secrets.REPO_NAME }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the code 
+        uses: actions/checkout@v3
+
+     - name: Run Prerequisites to Docker build
+        run: |
+          set -e
+          echo '${{ secrets.GCP_SERVICE_ACCOUNT }}' > client-secret.json
+          gcloud auth activate-service-account --key-file=client-secret.json
+          gcloud auth configure-docker --quiet
+
+      - name: Run Docker Build and Tag
+        run: |
+          docker build -t $image_name:${{github.run_number}} -t $image_name:latest .
+
+      - name: Docket Push to GCR
+        run: |
+          gcloud docker -- push $image_name:${{github.run_number}}
+          gcloud docker -- push $image_name:latest
