@@ -1,8 +1,8 @@
 module.exports = {
   // configuration here without worrying about the quotes
   development: {
-    hostname: "localhost",
-    port: 5000,
+    hostname: "sagitsu.guardio.dev",
+    port: 443,
     packAssets: false
   },
   production: {
