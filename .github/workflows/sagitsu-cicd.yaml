@@ -2,7 +2,7 @@ name: Sagitsu CICD
 on:
   workflow_dispatch:
 jobs:
-  build:
+  ci:
     name: Build and push the image
     runs-on: ubuntu-latest
     env:
