@@ -30,6 +30,7 @@ jobs:
 
   deploy:
     name: deploy the sagitsu
+    needs: [build]
     runs-on: ubuntu-latest
     env:
       image_name: ${{ secrets.REPO_NAME }}
