@@ -5,6 +5,6 @@ WORKDIR ${instDir}
 COPY . .
 RUN npm install -d
 
-EXPOSE 5000
+EXPOSE 8081
 
 CMD node server

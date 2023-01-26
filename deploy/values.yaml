@@ -1,0 +1,52 @@
+replicaCount: 1
+
+gcpProject: guardio
+serverHostName: guardio
+serviceAccountSecret: service-account-key
+
+image:
+  repository: gcr.io/guardio/sagitsu
+  pullPolicy: Always
+
+service:
+  backendConfig: long-running-backendconfig
+  type: ClusterIP
+  healthEndpoint: "/"
+  port: 8081
+
+readiness:
+  periodSeconds: 15
+  failureThreshold: 20
+
+liveness:
+  periodSeconds: 15
+  failureThreshold: 20
+
+startup:
+  periodSeconds: 10
+  failureThreshold: 12
+
+resources:
+  limits:
+    memory: "1Gi"
+  requests:
+    cpu: "100m"
+    memory: "512Mi"
+
+volume:
+  pvcName: "default-pvc"
+
+internalTLS:
+  secretName: internal-cert
+  domain: null
+
+options:
+  internalTLS: true
+  external: false
+  volume: false
+  san: false
+
+internalTLS:
+  certName: sagitsu-internal-cert
+  domains:
+    - "sagitsu.guardio.dev"
