@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build:  
+    runs-on: ubuntu-latest
     env:
       image_name: ${{ secrets.REPO_NAME }}
-    runs-on: ubuntu-latest
     steps:
       - name: checkout the code 
         uses: actions/checkout@v3
