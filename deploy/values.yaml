@@ -41,8 +41,8 @@ internalTLS:
   domain: null
 
 options:
-  internalTLS: true
-  external: false
+  internalTLS: false
+  external: true
   volume: false
   san: false
 
